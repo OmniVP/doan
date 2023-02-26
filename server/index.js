@@ -1,14 +1,13 @@
-const express = require('express');
-const app = express();
-const port = 8000;
-const path = require('path');
+const express = require('express'),
+   app = express(),
+   bodyParser = require('body-parser');
+port = process.env.PORT || 8000;
+app.listen(port);
 
-app.use(express.static('static'));
+console.log('API server started on: ' + port);
 
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve('pages/index.html'));
-});
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+var routes = require('./routes/appRoutes'); //importing route
+routes(app); //register the route
