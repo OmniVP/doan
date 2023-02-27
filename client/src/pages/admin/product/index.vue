@@ -1,28 +1,23 @@
-
 <template>
-   <div v-for="product of products">
-      <p>{{product.name_product}}</p>
-   </div>
-</template>
+    <div  v-for="product in products" >
+        <p>{{product.name_product}}</p>
+    </div>
+  </template>
 <script>
-export default {
-    data() {
-        return {
-            products: [],
-            errors: [],
-        };
-    },
 
-    // lấy dữ liệu khi component được tạo thành công
-    
-    created() {
-        axios.get(`http://localhost:8000/products`)
-            .then(response => {
-                this.products = response.data
-            })
-            .catch(e => {
-                this.errors.push(e)
-            })
-    }
+export default {
+    data: () => ({
+    error: "",
+    products: []
+  }),
+
+  mounted() {
+    fetch("http://localhost:8080/api/product")
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+        this.products = result;
+      });
+  },
 }
 </script>

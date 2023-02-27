@@ -1,25 +1,23 @@
-'user strict';
-var sql = require('./db.js');
+const sql = require("./db.js");
 
-//product object constructor
-var product = function(product){
-    console.log(product);
-    this.product = product.product;
-    this.status = product.status;
-    this.created_at = new Date();
+// constructor
+const Product = function(product) {
+  this.name_product = product.name_product;
+  this.price = product.price;
+  this.avatar = product.avatar;
 };
-product.getAllproduct = function getAllproduct(result) {
-    sql.query("Select * from product", function (err, res) {
 
-        if(err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else{
-            console.log('products : ', res);
-
-            result(null, res);
-        }
+Product.getAll = (result) => {
+    let query = "SELECT * FROM product";
+    sql.query(query, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("product: ", res);
+      result(null, res);
     });
-};
-module.exports= product;
+  };
+
+  module.exports = Product;  

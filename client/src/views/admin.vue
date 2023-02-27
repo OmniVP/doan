@@ -19,7 +19,7 @@
               </aside>
             </div>
             <div class="col-9">
-             
+              
               <router-view />
             </div>
           </div>
