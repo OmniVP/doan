@@ -1,5 +1,6 @@
-const mysql = require("mysql");
+
 const dbConfig = require("../config/db.config.js");
+const mysql = require('mysql2');
 
 // Create a connection to the database
 const connection = mysql.createConnection({

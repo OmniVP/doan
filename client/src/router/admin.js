@@ -2,7 +2,10 @@ import user from "../pages/admin/user/index.vue";
 import product from "../pages/admin/product/index.vue";
 import menu from "../pages/admin/menu/index.vue";
 import bill from "../pages/admin/bill/index.vue";
-import information from "../pages/admin/information/index.vue";
+import login from "../pages/admin/login/index.vue";
+import cateinfor from "../pages/admin/cateinfor/index.vue";
+
+
 
 const admin =
 [
@@ -32,10 +35,18 @@ const admin =
               component: bill,
             },
             {
-              path: 'information',
-              name: "admin-information",
-              component: information,
+              path: 'loginadmin',
+              name: "admin-login",
+              component: login,
             },
+            {
+              path: '/cateinfor/:id',
+              name: "admin-cateinfor",
+              component: cateinfor,
+            },
+
+            
+
         ]
     }
 ]

@@ -1,6 +1,7 @@
 <template>
 
-<section class="vh-100">
+<div id="space">
+  <section class="vh-100" >
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-9 col-lg-6 col-xl-5">
@@ -8,7 +9,7 @@
           class="img-fluid" alt="Sample image"> -->
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form>
+        <form >
           <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
             <p class="lead fw-normal mb-0 me-3">Đăng nhập bằng</p>
             <button type="button" class="btn btn-primary btn-floating mx-1">
@@ -30,24 +31,23 @@
 
           <!-- Email input -->
           <div class="form-outline mb-4">
-            <input type="email" id="form3Example3" class="form-control form-control-lg"
-              placeholder="Email" />
             <label class="form-label" for="form3Example3">Email</label>
+            <input type="email" id="form3Example3" class="form-control form-control-lg"
+              placeholder="Email" v-model="email"/>
           </div>
 
           <!-- Password input -->
           <div class="form-outline mb-3">
-            <input type="password" id="form3Example4" class="form-control form-control-lg"
-              placeholder="Mật khẩu" />
             <label class="form-label" for="form3Example4">Mật khẩu</label>
+            <input type="password" id="form3Example4" class="form-control form-control-lg"
+              placeholder="Mật khẩu" v-model="password" />
+            
           </div>
 
-          <div class="d-flex justify-content-between align-items-center">
-            <a href="#!" class="text-body">Quên mật khẩu?</a>
-          </div>
+          
 
           <div class="text-center text-lg-start mt-4 pt-2">
-            <button type="button" class="btn btn-primary btn-lg"
+            <button @click.prevent="login()"  class="btn btn-primary btn-lg"
               style="padding-left: 2.5rem; padding-right: 2.5rem;">Đăng nhập</button>
             <p class="small fw-bold mt-2 pt-1 mb-0">Không có tài khoản? <a href="/register"
                 class="link-danger">Đăng ký</a></p>
@@ -59,7 +59,62 @@
   </div>
 
 </section>
+</div>
 </template> 
+
+<script>
+import axios from 'axios'
+
+
+  export default{
+    data(){
+      return{
+        email:'',
+        password:''
+      }
+    },
+    computed: {
+        isValidEmail() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(this.email);
+        },
+        isValidPassword() {
+            return this.password.length >= 8;
+        },
+    },
+  
+    methods:{
+      async login(){
+
+        const data = {
+          email: this.email,
+          password: this.password,
+
+
+        }
+        const login = await axios.post('http://localhost:8000/users/login',data);
+        if(login.data.user.length !=0)
+        {
+          localStorage.setItem("user-info", JSON.stringify(login.data.user));  
+          this.$router.push({ name:'homepage'})
+
+
+        }else
+            {
+                alert('Mật khẩu hoặc email không đúng !!!');
+            }
+      }
+      
+      }
+  }
+
+</script>
+
+
+
+
+
+
 <style>
 .divider:after,
 .divider:before {
@@ -77,3 +132,4 @@ height: 100%;
 }
 }
 </style>
+
